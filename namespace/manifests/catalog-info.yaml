@@ -14,6 +14,7 @@ metadata:
   tags:
     - namespace
     - project
+    - eda
   links: []
 spec:
   type: project

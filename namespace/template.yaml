@@ -8,6 +8,7 @@ metadata:
     - project
     - namespace
     - orchestrator
+    - eda-governance
   annotations:
     backstage.io/managed-by: orchestrator
 spec:
@@ -41,6 +42,12 @@ spec:
             - 'Small (2vCPU / 8Gi)'
             - 'Medium (3vCPU / 12Gi)'
             - 'Large (6vCPU / 24Gi)'
+        eda_governance:
+          title: EDA Governance
+          type: boolean
+          description: All namespaces are governed by Event Driven Anisble. This cannot be disabled.
+          default: true
+          ui:disabled: true
   steps:
     - id: template-gitops-deployment
       name: Generating Deployment Resources
@@ -60,6 +67,7 @@ spec:
           git_host: ${{ parameters.git_host }}
           git_destination: ${{ parameters.namespace_owner }}/${{ parameters.component_id }}-gitops
           owner_role: admin
+          eda_governance: ${{ parameters.eda_governance }}
         targetPath: ./${{ parameters.namespace_owner }}-${{ parameters.component_id }}-gitops
 
     - id: publish
